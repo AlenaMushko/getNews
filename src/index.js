@@ -13,19 +13,18 @@
  * 
  * Доп завдання:
  * 1. Додати логіку debounce на поле вводу.
- *    Онвлювати новини лише після вводу як мінімум трьох символів і через 300 ms після завершення вводу
- * 
+ *    Онвлювати новини лише після вводу як мінімум трьох символів і через 300 ms після завершення 
+ * вводу
  * 2. Зробити гарний інтерфейс :)
  */
 
-
 /** 
  * Заняття 20. Додати до новин пагінацію по 8 новин на сторінці
- * 
  * 1. Зберігати поточну сторінку. І константу кількості елементів на сторінці
- * 2. Треба відобразити всі сторінки. Загальну кількість елементів поділити на кулькість елементів на одній сторінці
- * 3. Повісити клік на номер сторінки. Сформувати запит до апи. Викликати відповідну функцію запиту. Оновити поточну сторінку
- * 
+ * 2. Треба відобразити всі сторінки. Загальну кількість елементів поділити на кулькість елементів 
+ * на одній сторінці
+ * 3. Повісити клік на номер сторінки. Сформувати запит до апи. Викликати відповідну функцію 
+ * запиту. Оновити поточну сторінку
  * */
 
 const API_KEY = '758eaee05362425590906fb4540c32ad';
@@ -57,6 +56,7 @@ searchBtnRef.addEventListener('click', e => {
 
 paginationContainer.addEventListener('click', e => {
   e.preventDefault();
+  // щоб не відправляти запит поза кнопкою
   if (e.target.className !== "page-link") return
 
   currentPage = e.target.dataset.page;
@@ -87,10 +87,12 @@ loadMoreBtnRef.addEventListener('click', e => {
 /**
  * getNews
  * @param {String} query рядок з ключовими словами для пошуку
- * @returns {Promise} проміс, успішне відпрацювання якого повертає масив з новинами і загальну кількість новин по запиту.
+ * @returns {Promise} проміс, успішне відпрацювання якого повертає масив з новинами і загальну 
+ * кількість новин по запиту.
  */
 function getNews(query) {
-  const urlAPI = `https://newsapi.org/v2/everything?q=${query}&from=2022-12-01&apiKey=${API_KEY}&pageSize=${PageSize}&page=${currentPage}`;
+  const urlAPI = `https://newsapi.org/v2/everything?q=${query}&from=2022-12-01&apiKey=
+  ${API_KEY}&pageSize=${PageSize}&page=${currentPage}`;
   
   return axios.get(urlAPI)
   .then(res => res.data)
@@ -124,7 +126,8 @@ function createPagesElements () {
   let pagesElements = '';
   
   for (let i = 1; i <= totalPages; i += 1 ) {
-    pagesElements += `<li class="page-item"><a class="page-link" href="#" data-page=${i}>${i}</a></li>`
+    pagesElements += `<li class="page-item"><a class="page-link" href="#" 
+    data-page=${i}>${i}</a></li>`
   }
 
   return pagesElements
